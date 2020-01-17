@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/kellyselden/ember-cli-update-test-helpers/issues"
   },
-  "homepage": "https://github.com/kellyselden/ember-cli-update-test-helpers#readme"
+  "homepage": "https://github.com/kellyselden/ember-cli-update-test-helpers#readme",
+  "engines": {
+    "node": ">=8.10"
+  }
 }
