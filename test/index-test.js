@@ -9,6 +9,8 @@ const {
 const { promisify } = require('util');
 const newTmpDir = promisify(require('tmp').dir);
 const path = require('path');
+const fs = require('fs');
+const copyFile = promisify(fs.copyFile);
 
 describe(function() {
   this.timeout(5 * 1000);
@@ -60,8 +62,48 @@ describe(function() {
   });
 
   describe(emberInit, function() {
-    describe('blueprint', function() {
-      it('overwrites', async function() {
+    it('works', async function() {
+      let cwd = await emberInit({
+        args: [
+          '-sn',
+          '-b',
+          path.resolve(__dirname, 'fixtures/blueprint')
+        ]
+      });
+
+      expect(path.join(cwd, 'README.md')).to.be.a.file()
+        .with.contents.that.match(/overwritten/);
+    });
+
+    it('works inside ember app', async function() {
+      let cwd = await emberNew({
+        args: [
+          '-sn',
+          '-sg'
+        ]
+      });
+
+      await copyFile(
+        path.resolve(__dirname, 'fixtures/blueprint/files/README.md'),
+        path.join(cwd, 'README.md')
+      );
+
+      expect(path.join(cwd, 'README.md')).to.be.a.file()
+        .with.contents.that.match(/overwritten/);
+
+      await emberInit({
+        args: [
+          '-sn'
+        ],
+        cwd
+      });
+
+      expect(path.join(cwd, 'README.md')).to.be.a.file()
+        .with.contents.that.match(/README/);
+    });
+
+    describe('overwrite', function() {
+      it('works', async function() {
         let cwd = await emberNew({
           args: [
             '-sn',
@@ -78,7 +120,7 @@ describe(function() {
           cwd
         });
 
-        expect(path.join(cwd, '.ember-cli')).to.be.a.file()
+        expect(path.join(cwd, 'README.md')).to.be.a.file()
           .with.contents.that.match(/overwritten/);
       });
 
@@ -100,8 +142,8 @@ describe(function() {
           overwrite: false
         });
 
-        expect(path.join(cwd, '.ember-cli')).to.be.a.file()
-          .with.contents.that.match(/disableAnalytics/);
+        expect(path.join(cwd, 'README.md')).to.be.a.file()
+          .with.contents.that.match(/README/);
       });
     });
   });

@@ -43,6 +43,10 @@ async function emberInit({
   cwd,
   overwrite = true
 }) {
+  if (cwd === undefined) {
+    cwd = await newTmpDir();
+  }
+
   let ps = ember([
     'init',
     ...args
@@ -60,6 +64,8 @@ async function emberInit({
   });
 
   await ps;
+
+  return cwd;
 }
 
 module.exports.ember = ember;
