@@ -11,6 +11,8 @@ const newTmpDir = promisify(require('tmp').dir);
 const path = require('path');
 
 describe(function() {
+  this.timeout(5 * 1000);
+
   describe(emberNew, function() {
     it('works', async function() {
       let cwd = await emberNew({
