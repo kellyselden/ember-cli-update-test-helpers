@@ -71,7 +71,6 @@ async function emberInit({
 }
 
 async function prepareBlueprint({
-  packageName,
   cwd = process.cwd()
 } = {}) {
   let fileName = (await execa('npm', ['pack'], {
@@ -85,6 +84,8 @@ async function prepareBlueprint({
   await execa('npm', ['i', filePath], {
     cwd: tmpDir
   });
+
+  let packageName = require(path.join(cwd, 'package')).name;
 
   let resolved = require.resolve(packageName, { paths: [tmpDir] });
 

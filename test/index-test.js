@@ -154,8 +154,6 @@ describe(function() {
     it('works', async function() {
       let blueprintPath = path.resolve(__dirname, 'fixtures/excluded-files');
 
-      let packageName = require(path.join(blueprintPath, 'package')).name;
-
       let tmpDir = await newTmpDir();
 
       await cpr(blueprintPath, tmpDir);
@@ -178,7 +176,6 @@ describe(function() {
         blueprintPath: newBlueprintPath,
         cleanUp
       } = await prepareBlueprint({
-        packageName,
         cwd: blueprintPath
       });
 
