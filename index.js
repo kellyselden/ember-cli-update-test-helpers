@@ -4,6 +4,8 @@ const execa = require('execa');
 const { promisify } = require('util');
 const newTmpDir = promisify(require('tmp').dir);
 const path = require('path');
+const fs = require('fs');
+const unlink = promisify(fs.unlink);
 
 function ember(args, options) {
   let ps = execa('ember', args, {
@@ -68,6 +70,34 @@ async function emberInit({
   return cwd;
 }
 
+async function prepareBlueprint({
+  packageName,
+  cwd = process.cwd()
+} = {}) {
+  let fileName = (await execa('npm', ['pack'], {
+    cwd
+  })).stdout;
+
+  let filePath = path.join(cwd, fileName);
+
+  let tmpDir = await newTmpDir();
+
+  await execa('npm', ['i', filePath], {
+    cwd: tmpDir
+  });
+
+  let resolved = require.resolve(packageName, { paths: [tmpDir] });
+
+  return {
+    filePath,
+    blueprintPath: path.dirname(resolved),
+    async cleanUp() {
+      await unlink(filePath);
+    }
+  };
+}
+
 module.exports.ember = ember;
 module.exports.emberNew = emberNew;
 module.exports.emberInit = emberInit;
+module.exports.prepareBlueprint = prepareBlueprint;
