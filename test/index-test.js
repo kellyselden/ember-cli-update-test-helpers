@@ -72,7 +72,7 @@ describe(function() {
       });
 
       expect(path.join(cwd, 'README.md')).to.be.a.file()
-        .with.contents.that.match(/overwritten/);
+        .and.empty;
     });
 
     it('works inside ember app', async function() {
@@ -89,7 +89,7 @@ describe(function() {
       );
 
       expect(path.join(cwd, 'README.md')).to.be.a.file()
-        .with.contents.that.match(/overwritten/);
+        .and.empty;
 
       await emberInit({
         args: [
@@ -99,7 +99,7 @@ describe(function() {
       });
 
       expect(path.join(cwd, 'README.md')).to.be.a.file()
-        .with.contents.that.match(/README/);
+        .and.not.empty;
     });
 
     describe('overwrite', function() {
@@ -121,7 +121,7 @@ describe(function() {
         });
 
         expect(path.join(cwd, 'README.md')).to.be.a.file()
-          .with.contents.that.match(/overwritten/);
+          .and.empty;
       });
 
       it('ignores', async function() {
@@ -143,7 +143,7 @@ describe(function() {
         });
 
         expect(path.join(cwd, 'README.md')).to.be.a.file()
-          .with.contents.that.match(/README/);
+          .and.not.empty;
       });
     });
   });
