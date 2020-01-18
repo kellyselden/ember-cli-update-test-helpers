@@ -4,13 +4,15 @@ const { describe } = require('./helpers/mocha');
 const { expect } = require('./helpers/chai');
 const {
   emberNew,
-  emberInit
+  emberInit,
+  prepareBlueprint
 } = require('..');
 const { promisify } = require('util');
 const newTmpDir = promisify(require('tmp').dir);
 const path = require('path');
 const fs = require('fs');
 const copyFile = promisify(fs.copyFile);
+const cpr = promisify(require('cpr'));
 
 describe(function() {
   this.timeout(10 * 1000);
@@ -145,6 +147,59 @@ describe(function() {
         expect(path.join(cwd, 'README.md')).to.be.a.file()
           .and.not.empty;
       });
+    });
+  });
+
+  describe(prepareBlueprint, function() {
+    it('works', async function() {
+      let blueprintPath = path.resolve(__dirname, 'fixtures/excluded-files');
+
+      let packageName = require(path.join(blueprintPath, 'package')).name;
+
+      let tmpDir = await newTmpDir();
+
+      await cpr(blueprintPath, tmpDir);
+
+      blueprintPath = tmpDir;
+
+      let cwd = await emberInit({
+        args: [
+          '-sn',
+          '-b',
+          blueprintPath
+        ]
+      });
+
+      expect(path.join(cwd, 'ignored'))
+        .to.be.a.path('is present when it should not be');
+
+      let {
+        filePath,
+        blueprintPath: newBlueprintPath,
+        cleanUp
+      } = await prepareBlueprint({
+        packageName,
+        cwd: blueprintPath
+      });
+
+      blueprintPath = newBlueprintPath;
+
+      cwd = await emberInit({
+        args: [
+          '-sn',
+          '-b',
+          blueprintPath
+        ]
+      });
+
+      expect(path.join(cwd, 'ignored'))
+        .to.not.be.a.path('is missing when it should be');
+
+      expect(filePath).to.be.a.path();
+
+      await cleanUp();
+
+      expect(filePath).to.not.be.a.path();
     });
   });
 });
