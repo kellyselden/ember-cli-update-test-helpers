@@ -42,7 +42,7 @@ async function emberInit({
   args = [],
   cwd,
   overwrite = true
-}) {
+} = {}) {
   if (cwd === undefined) {
     cwd = await newTmpDir();
   }
