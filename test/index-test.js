@@ -173,7 +173,7 @@ describe(function() {
         .to.be.a.path('is present when it should not be');
 
       let {
-        filePath,
+        npmPackPath,
         blueprintPath: newBlueprintPath,
         cleanUp
       } = await prepareBlueprint({
@@ -193,11 +193,11 @@ describe(function() {
       expect(path.join(cwd, 'ignored'))
         .to.not.be.a.path('is missing when it should be');
 
-      expect(filePath).to.be.a.path();
+      expect(npmPackPath).to.be.a.path();
 
       await cleanUp();
 
-      expect(filePath).to.not.be.a.path();
+      expect(npmPackPath).to.not.be.a.path();
     });
   });
 
