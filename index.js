@@ -77,11 +77,11 @@ async function prepareBlueprint({
     cwd
   })).stdout;
 
-  let filePath = path.join(cwd, fileName);
+  let npmPackPath = path.join(cwd, fileName);
 
   let tmpDir = await newTmpDir();
 
-  await execa('npm', ['i', filePath], {
+  await execa('npm', ['i', npmPackPath], {
     cwd: tmpDir
   });
 
@@ -90,10 +90,10 @@ async function prepareBlueprint({
   let resolved = require.resolve(packageName, { paths: [tmpDir] });
 
   return {
-    filePath,
+    npmPackPath,
     blueprintPath: path.dirname(resolved),
     async cleanUp() {
-      await unlink(filePath);
+      await unlink(npmPackPath);
     }
   };
 }
@@ -104,14 +104,14 @@ function setUpBlueprintMocha({
   // eslint-disable-next-line no-undef
   before(async function() {
     let {
-      filePath,
+      npmPackPath,
       blueprintPath,
       cleanUp
     } = await prepareBlueprint({
       cwd
     });
 
-    this.npmPackPath = filePath;
+    this.npmPackPath = npmPackPath;
     this.blueprintPath = blueprintPath;
     this._cleanUpBlueprint = cleanUp;
   });
