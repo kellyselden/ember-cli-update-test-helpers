@@ -5,7 +5,8 @@ const { expect } = require('./helpers/chai');
 const {
   emberNew,
   emberInit,
-  prepareBlueprint
+  prepareBlueprint,
+  setUpBlueprintMocha
 } = require('..');
 const { promisify } = require('util');
 const newTmpDir = promisify(require('tmp').dir);
@@ -197,6 +198,25 @@ describe(function() {
       await cleanUp();
 
       expect(filePath).to.not.be.a.path();
+    });
+  });
+
+  describe(setUpBlueprintMocha, function() {
+    // eslint-disable-next-line mocha/no-setup-in-describe
+    setUpBlueprintMocha.call(this, {
+      // eslint-disable-next-line mocha/no-setup-in-describe
+      cwd: path.resolve(__dirname, 'fixtures/excluded-files')
+    });
+
+    after(function() {
+      expect(this.npmPackPath).to.not.be.a.path();
+    });
+
+    it('works', async function() {
+      expect(path.join(this.blueprintPath, 'ignored'))
+        .to.not.be.a.path('is missing when it should be');
+
+      expect(this.npmPackPath).to.be.a.path();
     });
   });
 });
