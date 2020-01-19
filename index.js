@@ -98,7 +98,32 @@ async function prepareBlueprint({
   };
 }
 
+function setUpBlueprintMocha({
+  cwd = process.cwd()
+} = {}) {
+  // eslint-disable-next-line no-undef
+  before(async function() {
+    let {
+      filePath,
+      blueprintPath,
+      cleanUp
+    } = await prepareBlueprint({
+      cwd
+    });
+
+    this.npmPackPath = filePath;
+    this.blueprintPath = blueprintPath;
+    this._cleanUpBlueprint = cleanUp;
+  });
+
+  // eslint-disable-next-line no-undef
+  after(async function() {
+    await this._cleanUpBlueprint();
+  });
+}
+
 module.exports.ember = ember;
 module.exports.emberNew = emberNew;
 module.exports.emberInit = emberInit;
 module.exports.prepareBlueprint = prepareBlueprint;
+module.exports.setUpBlueprintMocha = setUpBlueprintMocha;
