@@ -93,7 +93,13 @@ async function prepareBlueprint({
     npmPackPath,
     blueprintPath: path.dirname(resolved),
     async cleanUp() {
-      await unlink(npmPackPath);
+      try {
+        await unlink(npmPackPath);
+      } catch (err) {
+        if (err.code !== 'ENOENT') {
+          throw err;
+        }
+      }
     }
   };
 }
