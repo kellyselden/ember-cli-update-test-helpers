@@ -29,7 +29,7 @@ async function emberNew({
     cwd = await newTmpDir();
   }
 
-  await ember([
+  let { stdout } = await ember([
     'new',
     projectName,
     ...args
@@ -37,7 +37,9 @@ async function emberNew({
     cwd
   });
 
-  return path.join(cwd, projectName);
+  let dir = stdout.match(/^Successfully created project (.+)\.$/m)[1];
+
+  return path.join(cwd, dir);
 }
 
 async function emberInit({
