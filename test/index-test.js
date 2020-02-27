@@ -46,6 +46,20 @@ describe(function() {
       expect(cwd).to.be.a.directory();
     });
 
+    it('allows scope', async function() {
+      let cwd = await emberNew({
+        projectName: '@my-scope/foo',
+        args: [
+          '-sn',
+          '-sg'
+        ]
+      });
+
+      expect(cwd).to.endWith(path.normalize('/my-scope-foo'));
+
+      expect(cwd).to.be.a.directory();
+    });
+
     it('allows cwd', async function() {
       let tmpDir = await newTmpDir();
 
