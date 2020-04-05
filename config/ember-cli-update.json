@@ -19,7 +19,8 @@
           "name": "@kellyselden/node-template",
           "options": [
             "--repo-slug=kellyselden/ember-cli-update-test-helpers",
-            "--github-actions"
+            "--github-actions",
+            "--renovate"
           ]
         }
       ]
