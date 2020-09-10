@@ -126,7 +126,9 @@ function setUpBlueprintMocha({
 
   // eslint-disable-next-line no-undef
   after(async function() {
-    await this._cleanUpBlueprint();
+    if (this._cleanUpBlueprint) {
+      await this._cleanUpBlueprint();
+    }
   });
 }
 
