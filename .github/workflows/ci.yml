@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1.1.0
+    - uses: actions/setup-node@v1
 
     - run: npm ci
     - run: npm run lint
@@ -33,7 +33,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1.1.0
+    - uses: actions/setup-node@v1
       with:
         version: ${{ matrix.node }}
 
@@ -51,7 +51,8 @@ jobs:
       with:
         ref: ${{ github.head_ref }}
         token: ${{ secrets.GitHubToken }}
-    - uses: actions/setup-node@v1.1.0
-    - uses: kellyselden/ember-cli-update-action@master
+    - uses: actions/setup-node@v1
+    - uses: kellyselden/ember-cli-update-action@v2
       with:
         autofix_command: npm run lint -- --fix
+        ignore_to: true
