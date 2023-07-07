@@ -16,7 +16,7 @@ const copyFile = promisify(fs.copyFile);
 const cpr = promisify(require('cpr'));
 
 describe(function() {
-  this.timeout(15 * 1000);
+  this.timeout(15e3);
 
   describe(emberNew, function() {
     it('works', async function() {
