@@ -1,6 +1,5 @@
 'use strict';
 
-const execa = require('execa');
 const { promisify } = require('util');
 const newTmpDir = promisify(require('tmp').dir);
 const path = require('path');
@@ -8,7 +7,7 @@ const fs = require('fs');
 const unlink = promisify(fs.unlink);
 
 function ember(args, options) {
-  let ps = execa('ember', args, {
+  let ps = this.execa('ember', args, {
     preferLocal: true,
     localDir: __dirname,
     stdio: ['pipe', 'pipe', 'inherit'],
@@ -29,7 +28,9 @@ async function emberNew({
     cwd = await newTmpDir();
   }
 
-  let { stdout } = await ember([
+  let execa = await import('execa');
+
+  let { stdout } = await ember.call(execa, [
     'new',
     projectName,
     ...args
@@ -51,7 +52,9 @@ async function emberInit({
     cwd = await newTmpDir();
   }
 
-  let ps = ember([
+  let execa = await import('execa');
+
+  let ps = ember.call(execa, [
     'init',
     ...args
   ], {
@@ -75,6 +78,8 @@ async function emberInit({
 async function prepareBlueprint({
   cwd = process.cwd()
 } = {}) {
+  let { execa } = await import('execa');
+
   let fileName = (await execa('npm', ['pack'], {
     cwd
   })).stdout;
