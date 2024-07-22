@@ -80,9 +80,11 @@ async function prepareBlueprint({
 } = {}) {
   let { execa } = await import('execa');
 
-  let fileName = (await execa('npm', ['pack'], {
+  let {
+    stdout: fileName
+  } = await execa('npm', ['pack'], {
     cwd
-  })).stdout;
+  });
 
   let npmPackPath = path.join(cwd, fileName);
 
