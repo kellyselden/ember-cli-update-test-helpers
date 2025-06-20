@@ -24,7 +24,7 @@
     "node": ">=20.9"
   },
   "dependencies": {
-    "ember-cli": "^5.0.0",
+    "ember-cli": "^6.0.0",
     "execa": "^9.0.0",
     "tmp": "0.2.3"
   },
