@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/kellyselden/ember-cli-update-test-helpers#readme",
   "engines": {
-    "node": ">=18.12"
+    "node": ">=20.9"
   },
   "dependencies": {
     "ember-cli": "^5.0.0",
