@@ -19,6 +19,7 @@ describe(function() {
   this.timeout(15e3);
 
   describe(emberNew, function() {
+
     it('works', async function() {
       let cwd = await emberNew({
         args: [
@@ -79,6 +80,7 @@ describe(function() {
   });
 
   describe(emberInit, function() {
+
     it('works', async function() {
       let cwd = await emberInit({
         args: [
@@ -120,6 +122,7 @@ describe(function() {
     });
 
     describe('overwrite', function() {
+
       it('works', async function() {
         let cwd = await emberNew({
           args: [
@@ -166,6 +169,7 @@ describe(function() {
   });
 
   describe(prepareBlueprint, function() {
+
     it('works', async function() {
       let blueprintPath = path.resolve(__dirname, 'fixtures/excluded-files');
 
@@ -216,9 +220,9 @@ describe(function() {
   });
 
   describe(setUpBlueprintMocha, function() {
-    // eslint-disable-next-line mocha/no-setup-in-describe
+
     setUpBlueprintMocha.call(this, {
-      // eslint-disable-next-line mocha/no-setup-in-describe
+
       cwd: path.resolve(__dirname, 'fixtures/excluded-files')
     });
 
