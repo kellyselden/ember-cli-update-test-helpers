@@ -116,7 +116,7 @@ async function prepareBlueprint({
 function setUpBlueprintMocha({
   cwd = process.cwd()
 } = {}) {
-  // eslint-disable-next-line no-undef
+
   before(async function() {
     let {
       npmPackPath,
@@ -131,7 +131,6 @@ function setUpBlueprintMocha({
     this._cleanUpBlueprint = cleanUp;
   });
 
-  // eslint-disable-next-line no-undef
   after(async function() {
     if (this._cleanUpBlueprint) {
       await this._cleanUpBlueprint();
