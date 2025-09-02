@@ -11,7 +11,7 @@ function ember(args, options) {
     preferLocal: true,
     localDir: __dirname,
     stdio: ['pipe', 'pipe', 'inherit'],
-    ...options
+    ...options,
   });
 
   ps.stdout.pipe(process.stdout);
@@ -22,7 +22,7 @@ function ember(args, options) {
 async function emberNew({
   projectName = 'my-project',
   args = [],
-  cwd
+  cwd,
 } = {}) {
   if (cwd === undefined) {
     cwd = await newTmpDir();
@@ -33,9 +33,9 @@ async function emberNew({
   let { stdout } = await ember.call(execa, [
     'new',
     projectName,
-    ...args
+    ...args,
   ], {
-    cwd
+    cwd,
   });
 
   let dir = stdout.match(/^Successfully created project (.+)\.$/m)[1];
@@ -46,7 +46,7 @@ async function emberNew({
 async function emberInit({
   args = [],
   cwd,
-  overwrite = true
+  overwrite = true,
 } = {}) {
   if (cwd === undefined) {
     cwd = await newTmpDir();
@@ -56,9 +56,9 @@ async function emberInit({
 
   let ps = ember.call(execa, [
     'init',
-    ...args
+    ...args,
   ], {
-    cwd
+    cwd,
   });
 
   let overwriteChar = overwrite ? 'y' : 'n';
@@ -76,14 +76,14 @@ async function emberInit({
 }
 
 async function prepareBlueprint({
-  cwd = process.cwd()
+  cwd = process.cwd(),
 } = {}) {
   let { execa } = await import('execa');
 
   let {
-    stdout: fileName
+    stdout: fileName,
   } = await execa('npm', ['pack'], {
-    cwd
+    cwd,
   });
 
   let npmPackPath = path.join(cwd, fileName);
@@ -91,7 +91,7 @@ async function prepareBlueprint({
   let tmpDir = await newTmpDir();
 
   await execa('npm', ['i', npmPackPath], {
-    cwd: tmpDir
+    cwd: tmpDir,
   });
 
   let packageName = require(path.join(cwd, 'package')).name;
@@ -109,21 +109,21 @@ async function prepareBlueprint({
           throw err;
         }
       }
-    }
+    },
   };
 }
 
 function setUpBlueprintMocha({
-  cwd = process.cwd()
+  cwd = process.cwd(),
 } = {}) {
   // eslint-disable-next-line no-undef
   before(async function() {
     let {
       npmPackPath,
       blueprintPath,
-      cleanUp
+      cleanUp,
     } = await prepareBlueprint({
-      cwd
+      cwd,
     });
 
     this.npmPackPath = npmPackPath;

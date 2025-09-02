@@ -6,7 +6,7 @@ const {
   emberNew,
   emberInit,
   prepareBlueprint,
-  setUpBlueprintMocha
+  setUpBlueprintMocha,
 } = require('..');
 const { promisify } = require('util');
 const newTmpDir = promisify(require('tmp').dir);
@@ -23,8 +23,8 @@ describe(function() {
       let cwd = await emberNew({
         args: [
           '-sn',
-          '-sg'
-        ]
+          '-sg',
+        ],
       });
 
       expect(cwd).to.have.basename('my-project');
@@ -37,8 +37,8 @@ describe(function() {
         projectName: 'foo',
         args: [
           '-sn',
-          '-sg'
-        ]
+          '-sg',
+        ],
       });
 
       expect(cwd).to.have.basename('foo');
@@ -51,8 +51,8 @@ describe(function() {
         projectName: '@my-scope/foo',
         args: [
           '-sn',
-          '-sg'
-        ]
+          '-sg',
+        ],
       });
 
       expect(cwd).to.endWith(path.normalize('/my-scope-foo'));
@@ -66,9 +66,9 @@ describe(function() {
       let cwd = await emberNew({
         args: [
           '-sn',
-          '-sg'
+          '-sg',
         ],
-        cwd: tmpDir
+        cwd: tmpDir,
       });
 
       expect(cwd).to.have.dirname(tmpDir);
@@ -84,8 +84,8 @@ describe(function() {
         args: [
           '-sn',
           '-b',
-          path.resolve(__dirname, 'fixtures/blueprint')
-        ]
+          path.resolve(__dirname, 'fixtures/blueprint'),
+        ],
       });
 
       expect(path.join(cwd, 'README.md')).to.be.a.file()
@@ -96,13 +96,13 @@ describe(function() {
       let cwd = await emberNew({
         args: [
           '-sn',
-          '-sg'
-        ]
+          '-sg',
+        ],
       });
 
       await copyFile(
         path.resolve(__dirname, 'fixtures/blueprint/files/README.md'),
-        path.join(cwd, 'README.md')
+        path.join(cwd, 'README.md'),
       );
 
       expect(path.join(cwd, 'README.md')).to.be.a.file()
@@ -110,9 +110,9 @@ describe(function() {
 
       await emberInit({
         args: [
-          '-sn'
+          '-sn',
         ],
-        cwd
+        cwd,
       });
 
       expect(path.join(cwd, 'README.md')).to.be.a.file()
@@ -124,17 +124,17 @@ describe(function() {
         let cwd = await emberNew({
           args: [
             '-sn',
-            '-sg'
-          ]
+            '-sg',
+          ],
         });
 
         await emberInit({
           args: [
             '-sn',
             '-b',
-            path.resolve(__dirname, 'fixtures/blueprint')
+            path.resolve(__dirname, 'fixtures/blueprint'),
           ],
-          cwd
+          cwd,
         });
 
         expect(path.join(cwd, 'README.md')).to.be.a.file()
@@ -145,18 +145,18 @@ describe(function() {
         let cwd = await emberNew({
           args: [
             '-sn',
-            '-sg'
-          ]
+            '-sg',
+          ],
         });
 
         await emberInit({
           args: [
             '-sn',
             '-b',
-            path.resolve(__dirname, 'fixtures/blueprint')
+            path.resolve(__dirname, 'fixtures/blueprint'),
           ],
           cwd,
-          overwrite: false
+          overwrite: false,
         });
 
         expect(path.join(cwd, 'README.md')).to.be.a.file()
@@ -179,8 +179,8 @@ describe(function() {
         args: [
           '-sn',
           '-b',
-          blueprintPath
-        ]
+          blueprintPath,
+        ],
       });
 
       expect(path.join(cwd, 'ignored'))
@@ -189,9 +189,9 @@ describe(function() {
       let {
         npmPackPath,
         blueprintPath: newBlueprintPath,
-        cleanUp
+        cleanUp,
       } = await prepareBlueprint({
-        cwd: blueprintPath
+        cwd: blueprintPath,
       });
 
       blueprintPath = newBlueprintPath;
@@ -200,8 +200,8 @@ describe(function() {
         args: [
           '-sn',
           '-b',
-          blueprintPath
-        ]
+          blueprintPath,
+        ],
       });
 
       expect(path.join(cwd, 'ignored'))
@@ -219,7 +219,7 @@ describe(function() {
     // eslint-disable-next-line mocha/no-setup-in-describe
     setUpBlueprintMocha.call(this, {
       // eslint-disable-next-line mocha/no-setup-in-describe
-      cwd: path.resolve(__dirname, 'fixtures/excluded-files')
+      cwd: path.resolve(__dirname, 'fixtures/excluded-files'),
     });
 
     after(function() {
