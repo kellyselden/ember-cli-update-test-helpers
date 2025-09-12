@@ -28,7 +28,7 @@
   "devDependencies": {
     "@kellyselden/eslint-config": "^1.0.0",
     "@kellyselden/node-template": "6.11.1",
-    "chai": "^4.5.0",
+    "chai": "^6.0.0",
     "chai-fs": "^2.0.0",
     "chai-string": "^1.5.0",
     "cpr": "^3.0.1",
