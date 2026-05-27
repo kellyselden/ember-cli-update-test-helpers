@@ -23,7 +23,7 @@
   "dependencies": {
     "ember-cli": "^6.0.0",
     "execa": "^9.0.0",
-    "tmp": "0.2.5"
+    "tmp": "0.2.6"
   },
   "devDependencies": {
     "@kellyselden/eslint-config": "^1.0.0",
