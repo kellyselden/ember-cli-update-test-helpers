@@ -21,7 +21,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "ember-cli": "^6.0.0",
+    "ember-cli": "^7.0.0",
     "execa": "^9.0.0",
     "tmp": "0.2.6"
   },
